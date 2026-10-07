@@ -20,8 +20,8 @@
 --
 --  Revision History:
 --    Date      Version    Description
---    05/2023   2023.05    Updated deprecated BURST_COV to call SetDelayCoverageID/GetDelayCoverageID 
---    04/2023   2023.04    Updated to support delay randomization. 
+--    05/2023   2023.05    Updated deprecated BURST_COV to call SetDelayCoverageID/GetDelayCoverageID
+--    04/2023   2023.04    Updated to support delay randomization.
 --    02/2022   2022.02    Added RECEIVE_READY_WAIT_FOR_GET to so don't send TReady until have a Get transaction
 --    03/2021   2021.03    Updated for detecting multiple drivers
 --    01/2020   2020.01    Updated license notice
@@ -143,7 +143,7 @@ package AxiStreamOptionsPkg is
   --
   -- Deprecated Items - part of an early implementation
   --
-  
+
   ------------------------------------------------------------
   procedure SetAxiStreamOptions (
   -- Deprecated
@@ -207,7 +207,7 @@ package body AxiStreamOptionsPkg is
     constant OptVal      : In    std_logic_vector
   ) is
   begin
-    TransRec.ParamToModel <= ToTransaction(OptVal, TransRec.ParamToModel'length) ;
+    TransRec.ParamToModel <= SafeResize(OptVal, TransRec.ParamToModel'length) ;
     SetModelOptions(TransRec, AxiStreamOptionsType'POS(Option)) ;
   end procedure SetAxiStreamOptions ;
 
@@ -242,15 +242,15 @@ package body AxiStreamOptionsPkg is
   ) is
   begin
     GetModelOptions(TransRec, AxiStreamOptionsType'POS(Option)) ;
-    OptVal := FromTransaction(TransRec.ParamFromModel, OptVal'length) ;
+    OptVal := SafeResize(TransRec.ParamFromModel, OptVal'length) ;
   end procedure GetAxiStreamOptions ;
-  
-  
+
+
   ------------------------------------------------------------
   --
   -- Deprecated Items - part of an early implementation
   --
-  
+
   ------------------------------------------------------------
   procedure SetAxiStreamOptions (
   -- Deprecated
@@ -260,7 +260,7 @@ package body AxiStreamOptionsPkg is
     constant OptVal      : In    DelayCoverageIDType
   ) is
   begin
-    SetDelayCoverageID(TransRec, OptVal) ; 
+    SetDelayCoverageID(TransRec, OptVal) ;
 --    SetModelOptions(TransRec, AxiStreamOptionsType'POS(Option), OptVal.ID) ;
   end procedure SetAxiStreamOptions ;
 
@@ -272,11 +272,11 @@ package body AxiStreamOptionsPkg is
     constant Option      : In    AxiStreamOptionsType ;
     variable OptVal      : Out   DelayCoverageIDType
   ) is
-    -- variable IntVal : integer ; 
+    -- variable IntVal : integer ;
   begin
-    GetDelayCoverageID(TransRec, OptVal) ; 
+    GetDelayCoverageID(TransRec, OptVal) ;
 --    GetModelOptions(TransRec, AxiStreamOptionsType'POS(Option), IntVal) ;
---    OptVal := GetBurstCoverage(IntVal) ;  
+--    OptVal := GetBurstCoverage(IntVal) ;
   end procedure GetAxiStreamOptions ;
 
 

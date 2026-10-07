@@ -50,8 +50,8 @@ library osvvm ;
 
 library osvvm_common ;
     context osvvm_common.OsvvmCommonContext ;
-    
-  use work.AxiStreamOptionsPkg.all ; 
+
+  use work.AxiStreamOptionsPkg.all ;
 
 package AxiStreamOptionsArrayPkg is
 
@@ -167,7 +167,7 @@ package body AxiStreamOptionsArrayPkg is
     constant OptVal      : In    std_logic_vector
   ) is
   begin
-    TransRec(Index).ParamToModel <= ToTransaction(OptVal, TransRec(Index).ParamToModel'length) ;
+    TransRec(Index).ParamToModel <= SafeResize(OptVal, TransRec(Index).ParamToModel'length) ;
     SetModelOptions(TransRec, Index, AxiStreamOptionsType'POS(Option)) ;
   end procedure SetAxiStreamOptions ;
 
@@ -205,7 +205,7 @@ package body AxiStreamOptionsArrayPkg is
   ) is
   begin
     GetModelOptions(TransRec, Index, AxiStreamOptionsType'POS(Option)) ;
-    OptVal := FromTransaction(TransRec(Index).ParamFromModel, OptVal'length) ;
+    OptVal := SafeResize(TransRec(Index).ParamFromModel, OptVal'length) ;
   end procedure GetAxiStreamOptions ;
 
 end package body AxiStreamOptionsArrayPkg ;
